@@ -1,0 +1,303 @@
+/* ================================================================
+   FUENTES — Editorial Quiet Luxury
+   ================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+/* ================================================================
+   THEME — Paleta Rosa Sandoval "Quiet Luxury"
+   ================================================================ */
+@theme {
+  /* Paleta original conservada */
+  --color-olive:       #4D5A4E;
+  --color-olive-dark:  #2E3B32;
+  --color-olive-light: #6B7B6D;
+  --color-beige:       #D9D897;
+  --color-beige-light: #e2e1be;
+  --color-cream:       #f5f5e8;
+  --color-gray-soft:   #f8f9fa;
+  --color-gray-text:   #6B7280;
+  --color-gray-muted:  #9CA3AF;
+
+  /* Nuevos — tonos editoriales cálidos + dark stage + gilt */
+  --color-sand:  #FDFBF7;   /* fondo principal — cálido, luminoso */
+  --color-silk:  #F5F2EB;   /* superficies premium — beige seda */
+  --color-rich:  #1C2D1F;   /* dark stage — testimonios, contraste dramático */
+  --color-gilt:  #C9A227;   /* acento oro — hairlines, dots, indicadores */
+
+  /* Familias tipográficas */
+  --font-display: 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-body:    'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-ui:      'Inter Tight', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-inter:   'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ================================================================
+   BASE
+   ================================================================ */
+@layer base {
+  body {
+    font-family: var(--font-body);
+    font-optical-sizing: auto;
+    line-height: 1.65;
+    color: var(--color-olive-dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Fondo cálido con brillos suaves — reemplaza el "flat white" */
+    background:
+      radial-gradient(circle at 12% -8%,  rgba(201, 162, 39, 0.055) 0%, transparent 45%),
+      radial-gradient(circle at 88% 108%, rgba(217, 216, 151, 0.09) 0%, transparent 50%),
+      var(--color-sand);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.005em;
+  }
+  h5, h6 {
+    font-family: var(--font-ui);
+    letter-spacing: 0.03em;
+  }
+
+  button, input, select, textarea, label, nav a {
+    font-family: var(--font-ui);
+  }
+}
+
+/* ================================================================
+   GLOBAL
+   ================================================================ */
+html { scroll-behavior: smooth; }
+body { overflow-x: hidden; }
+
+::selection {
+  background: var(--color-olive-dark);
+  color: var(--color-sand);
+}
+
+/* ================================================================
+   ANIMACIONES — biblioteca base
+   ================================================================ */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(77, 90, 78, 0.4); }
+  50%      { box-shadow: 0 0 0 12px rgba(77, 90, 78, 0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+/* Nuevos — glow suave y drift editorial */
+@keyframes soft-glow {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.7; }
+}
+@keyframes drift {
+  0%, 100% { transform: translateY(0) rotate(-3.5deg); }
+  50%      { transform: translateY(-6px) rotate(-3.5deg); }
+}
+
+.animate-slideInLeft   { animation: slideInLeft 0.6s ease forwards; }
+.animate-fadeInUp      { animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.animate-fadeIn        { animation: fadeIn 0.5s ease forwards; }
+.animate-pulse-glow    { animation: pulse-glow 2s infinite; }
+.animate-float         { animation: float 3s ease-in-out infinite; }
+.animate-bounce-subtle { animation: bounce-subtle 2s ease-in-out infinite; }
+.animate-soft-glow     { animation: soft-glow 4s ease-in-out infinite; }
+.animate-drift         { animation: drift 6s ease-in-out infinite; }
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+
+/* ================================================================
+   .btn-luxury — el botón "Abundancia"
+   Border gilt · fill líquido de izquierda a derecha · dot micro
+   ================================================================ */
+.btn-luxury {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.35rem;
+  padding: 1.05rem 2.35rem;
+  border: 1px solid var(--color-gilt);
+  border-radius: 0.4rem;
+  background: color-mix(in srgb, var(--color-beige) 15%, white);
+  color: var(--color-olive-dark);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 500ms cubic-bezier(0.65, 0, 0.35, 1),
+              box-shadow 500ms cubic-bezier(0.65, 0, 0.35, 1),
+              transform 500ms cubic-bezier(0.65, 0, 0.35, 1),
+              border-color 500ms ease-out;
+}
+.btn-luxury::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg,
+    var(--color-rich) 0%,
+    var(--color-olive-dark) 60%,
+    var(--color-olive) 100%);
+  transform: translateX(-102%);
+  transition: transform 620ms cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: -1;
+}
+.btn-luxury > * {
+  position: relative;
+  z-index: 1;
+}
+.btn-luxury:hover {
+  color: var(--color-sand);
+  border-color: var(--color-gilt);
+  box-shadow: 0 22px 50px -22px rgba(28, 45, 31, 0.55);
+  transform: translateY(-1px);
+}
+.btn-luxury:hover::before { transform: translateX(0); }
+
+.btn-luxury:focus { outline: none; }
+.btn-luxury:focus-visible {
+  outline: 2px solid var(--color-gilt);
+  outline-offset: 3px;
+}
+
+/* Coordenada dot — señal editorial que se desliza */
+.btn-luxury-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--color-gilt);
+  opacity: 0.9;
+  transition: transform 520ms cubic-bezier(0.65, 0, 0.35, 1),
+              opacity 300ms ease-out,
+              background 300ms ease-out;
+}
+.btn-luxury:hover .btn-luxury-dot {
+  transform: translateX(7px);
+  opacity: 1;
+}
+
+/* Variante — botón luxury en fondo oscuro (dark stage) */
+.btn-luxury--onDark {
+  background: transparent;
+  color: var(--color-sand);
+  border-color: var(--color-gilt);
+}
+.btn-luxury--onDark::before {
+  background: linear-gradient(115deg,
+    color-mix(in srgb, var(--color-gilt) 92%, white) 0%,
+    var(--color-gilt) 100%);
+}
+.btn-luxury--onDark:hover {
+  color: var(--color-rich);
+}
+
+/* ================================================================
+   .card-glass — superficie glassmórfica warm
+   ================================================================ */
+.card-glass {
+  background: color-mix(in srgb, var(--color-sand) 60%, transparent);
+  backdrop-filter: blur(12px) saturate(1.05);
+  -webkit-backdrop-filter: blur(12px) saturate(1.05);
+  border: 1px solid rgba(28, 45, 31, 0.07);
+}
+
+/* ================================================================
+   MICROPOLISH — Formulario (#contacto)
+   ================================================================ */
+#contacto form input,
+#contacto form textarea {
+  background-color: color-mix(in srgb, var(--color-beige) 18%, white) !important;
+  border-radius: 0.5rem !important;
+  transition: background-color 500ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow      500ms cubic-bezier(0.22, 1, 0.36, 1),
+              border-color    500ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+  font-family: var(--font-ui) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.005em;
+}
+#contacto form input:hover,
+#contacto form textarea:hover {
+  background-color: color-mix(in srgb, var(--color-beige) 24%, white) !important;
+}
+#contacto form input:focus,
+#contacto form textarea:focus {
+  background-color: color-mix(in srgb, var(--color-beige) 28%, white) !important;
+  box-shadow: 0 0 0 3px rgba(46, 59, 50, 0.10) !important;
+  outline: none;
+}
+#contacto form input::placeholder,
+#contacto form textarea::placeholder {
+  color: rgba(46, 59, 50, 0.35);
+  font-style: italic;
+}
+#contacto form label {
+  font-family: var(--font-ui) !important;
+  font-weight: 600 !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--color-olive-dark) !important;
+}
+#contacto form button[type="submit"] {
+  border-radius: 0.5rem !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  font-size: 0.82rem !important;
+  padding-top: 1.15rem !important;
+  padding-bottom: 1.15rem !important;
+  transition: all 500ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+/* ================================================================
+   SCROLLBAR
+   ================================================================ */
+::-webkit-scrollbar        { width: 8px; }
+::-webkit-scrollbar-track  { background: var(--color-silk); }
+::-webkit-scrollbar-thumb  { background: var(--color-olive); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-olive-dark); }
+
+/* ================================================================
+   ACCESIBILIDAD — reduced motion
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
