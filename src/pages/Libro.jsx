@@ -1,10 +1,52 @@
 import { useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { BOOK } from '../constants';
+import Link from '../components/Link';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
+/**
+ * BuyButton — CTA de compra con estado.
+ *
+ * ⚠️ Mientras BOOK.onSale sea false, NO enlazamos a Amazon: la
+ * constante AMAZON_BOOK_LINK todavía apunta a un ASIN de ejemplo y
+ * mandaría al visitante a una página inexistente. En su lugar
+ * mostramos el estado real del libro.
+ *
+ * Al publicar: poner el enlace real en AMAZON_BOOK_LINK y
+ * BOOK_ON_SALE = true en constants.js. Los dos botones de esta
+ * página se activan solos.
+ */
+function BuyButton({ onDark = false }) {
+    const classes = `btn-luxury ${onDark ? 'btn-luxury--onDark' : ''}`;
+
+    if (!BOOK.onSale) {
+        return (
+            <div className="inline-flex flex-col gap-3">
+                <span
+                    className={`${classes} pointer-events-none opacity-55`}
+                    aria-disabled="true"
+                >
+                    <span>Próximamente en Amazon</span>
+                    <span className="btn-luxury-dot" aria-hidden="true" />
+                </span>
+                <span className={`font-mono text-[10px] tracking-[0.18em] uppercase
+                    ${onDark ? 'text-sand/45' : 'text-olive-dark/45'}`}>
+                    Fecha de publicación por anunciar
+                </span>
+            </div>
+        );
+    }
+
+    return (
+        <a href={BOOK.amazonUrl} target="_blank" rel="noopener noreferrer" className={classes}>
+            <span>Comprar en Amazon</span>
+            <span className="btn-luxury-dot" aria-hidden="true" />
+        </a>
+    );
+}
+
 // ================================================================
-// BookDetail.jsx — Vista dedicada del libro "Método GPS"
+// Libro.jsx — Vista dedicada del libro "GPS de la Abundancia"
 // ================================================================
 //
 // Flujo visual:
@@ -24,28 +66,50 @@ import useIntersectionObserver from '../hooks/useIntersectionObserver';
 // Todos los enlaces de Amazon vienen de BOOK.amazonUrl (constants.js).
 // ================================================================
 
-/** Elogios tempranos — testimoniales sobre el libro */
+/**
+ * Elogios tempranos sobre el libro.
+ *
+ * ⚠️⚠️ PLACEHOLDER — igual que los testimonios de content.js.
+ *
+ * Estos tres nombres (Carmen V., Isabel M., Julia S.) NO corresponden
+ * a personas reales: venían de la maqueta original. Publicar elogios
+ * atribuidos a personas inventadas es un riesgo reputacional evidente,
+ * y más en un libro que se va a vender.
+ *
+ * Antes de publicar el libro:
+ *   · Reemplazar con lectores reales que hayan autorizado su cita, o
+ *   · Poner PRAISE_PENDING = true para ocultar la sección entera.
+ *
+ * Mientras el libro no esté a la venta (BOOK.onSale === false), la
+ * sección se oculta automáticamente: no tiene sentido mostrar reseñas
+ * de una obra que todavía nadie ha podido leer.
+ */
+const PRAISE_PENDING = true;
+
 const bookPraise = [
     {
         text: 'Un manual íntimo que reordena la relación con el dinero desde la raíz. Rosa escribe con la calma de quien caminó el mapa antes de dibujarlo.',
-        by: 'Carmen V.',
-        role: 'Escritora',
+        by: 'Nombre por confirmar',
+        role: 'Lectura anticipada',
     },
     {
         text: 'Convierte la conversación más incómoda —el dinero— en un ejercicio de conciencia y ternura. Difícil dejarlo en la mesita de noche.',
-        by: 'Isabel M.',
-        role: 'Psicóloga financiera',
+        by: 'Nombre por confirmar',
+        role: 'Lectura anticipada',
     },
     {
         text: 'No es un libro de finanzas. Es una brújula interior para la vida que quieres construir, con la disciplina para llegar hasta ahí.',
-        by: 'Julia S.',
-        role: 'Lectora anticipada',
+        by: 'Nombre por confirmar',
+        role: 'Lectura anticipada',
     },
 ];
 
+/** ¿Mostrar la sección de elogios? Solo con contenido real y libro publicado. */
+const showPraise = !PRAISE_PENDING && BOOK.onSale;
+
 /** Especificaciones técnicas del libro */
 const specs = [
-    { label: 'Edición', value: 'Primera' },
+    { label: 'Edición', value: BOOK.edition },
     { label: 'Publicación', value: BOOK.year },
     { label: 'Páginas', value: String(BOOK.pages) },
     { label: 'Idioma', value: 'Español' },
@@ -53,7 +117,7 @@ const specs = [
     { label: 'ISBN', value: BOOK.isbn },
 ];
 
-export default function BookDetail() {
+export default function Libro() {
     // Intersection observers para animaciones de entrada
     const [specRef, specVisible] = useIntersectionObserver({ threshold: 0.2 });
     const [pillarsRef, pillarsVisible] = useIntersectionObserver({ threshold: 0.15 });
@@ -62,18 +126,6 @@ export default function BookDetail() {
 
     // Estado para el fallback de la portada (React state, no DOM manipulation)
     const [coverError, setCoverError] = useState(false);
-
-    /**
-     * goHome — Navega de vuelta a la vista Home.
-     * Limpia el hash y dispara el evento 'hashchange'
-     * para que App.jsx cambie la vista.
-     */
-    const goHome = (e) => {
-        e.preventDefault();
-        window.history.pushState(null, '', window.location.pathname + window.location.search);
-        window.dispatchEvent(new Event('hashchange'));
-        window.scrollTo({ top: 0, behavior: 'auto' });
-    };
 
     return (
         <article style={{ background: 'var(--color-sand)' }}>
@@ -89,9 +141,8 @@ export default function BookDetail() {
                 <div className="max-w-[1400px] mx-auto px-[6%]">
                     {/* Enlace "Volver al inicio" */}
                     <div className="mb-14">
-                        <a
-                            href="#"
-                            onClick={goHome}
+                        <Link
+                            to="/"
                             className="group inline-flex items-center gap-2 font-ui text-xs uppercase
                 tracking-[0.15em] text-olive-dark/60 no-underline
                 transition-colors duration-500 hover:text-olive-dark"
@@ -102,7 +153,7 @@ export default function BookDetail() {
                                 className="transition-transform duration-500 group-hover:-translate-x-1"
                             />
                             Volver al inicio
-                        </a>
+                        </Link>
                     </div>
 
                     <div className="grid grid-cols-12 gap-x-6 gap-y-16 items-start">
@@ -121,16 +172,20 @@ export default function BookDetail() {
                                 <span>{BOOK.year}</span>
                             </div>
 
+                            {/* El título sale de BOOK (constants.js): antes estaba
+                                escrito a mano como "Método GPS", que no es el nombre
+                                de la marca. La marca registrada es
+                                "GPS de la Abundancia®". */}
                             <h1 className="font-display text-olive-dark leading-[0.9] tracking-tight m-0">
-                                <span className="block text-[clamp(3rem,9vw,7rem)] font-light">
-                                    Método
+                                <span className="block text-[clamp(2.5rem,7.5vw,5.5rem)] font-light">
+                                    GPS de la
                                 </span>
-                                <span className="block text-[clamp(3rem,9vw,7rem)] italic font-normal text-olive">
-                                    GPS
+                                <span className="block text-[clamp(2.5rem,7.5vw,5.5rem)] italic font-normal text-olive">
+                                    Abundancia
                                 </span>
                                 <span className="block mt-6 text-[clamp(1.25rem,2.4vw,1.85rem)]
                    font-body italic font-light text-olive-dark/70 tracking-normal">
-                                    Ser, hacer y tener.
+                                    {BOOK.subtitle}.
                                 </span>
                             </h1>
 
@@ -144,15 +199,7 @@ export default function BookDetail() {
                             </p>
 
                             <div className="mt-14">
-                                <a
-                                    href={BOOK.amazonUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="btn-luxury"
-                                >
-                                    <span>Comprar en Amazon</span>
-                                    <span className="btn-luxury-dot" aria-hidden="true" />
-                                </a>
+                                <BuyButton />
                             </div>
                         </div>
 
@@ -220,19 +267,19 @@ export default function BookDetail() {
                                                 {BOOK.author} · {BOOK.year}
                                             </div>
                                             <div
-                                                className="font-display font-light leading-[0.9]"
-                                                style={{ fontSize: '2.5rem' }}
+                                                className="font-display font-light leading-[1.05]"
+                                                style={{ fontSize: '1.9rem' }}
                                             >
-                                                Método
+                                                GPS de la
                                             </div>
                                             <div
-                                                className="font-display font-normal italic leading-[0.9]"
+                                                className="font-display font-normal italic leading-[1.05]"
                                                 style={{
-                                                    fontSize: '2.5rem',
+                                                    fontSize: '1.9rem',
                                                     color: 'var(--color-gilt)',
                                                 }}
                                             >
-                                                GPS
+                                                Abundancia
                                             </div>
                                             <div
                                                 className="font-body italic opacity-85 mt-4"
@@ -442,7 +489,10 @@ export default function BookDetail() {
                 </div>
             </section>
 
-            {/* ═══ ELOGIOS TEMPRANOS · PRAISE ═══════════════════════ */}
+            {/* ═══ ELOGIOS TEMPRANOS · PRAISE ═══════════════════════
+                 Solo se muestra con elogios reales Y el libro publicado.
+                 Ver la nota en PRAISE_PENDING arriba. */}
+            {showPraise && (
             <section
                 ref={praiseRef}
                 className="py-32 md:py-40 border-t"
@@ -505,6 +555,7 @@ export default function BookDetail() {
                     </div>
                 </div>
             </section>
+            )}
 
             {/* ═══ CTA FINAL — Match perfecto con el Footer ══════════
                  · Fondo: var(--color-olive-dark) — MISMO tono que Footer
@@ -565,18 +616,10 @@ export default function BookDetail() {
                             {' — '}
                             <span style={{ color: 'rgba(253, 251, 247, 0.85)' }}>{BOOK.subtitle}</span>.
                             <br className="hidden sm:block" />
-                            Disponible ahora en Amazon.
+                            {BOOK.onSale ? 'Disponible ahora en Amazon.' : 'Próximamente disponible.'}
                         </p>
 
-                        <a
-                            href={BOOK.amazonUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn-luxury btn-luxury--onDark"
-                        >
-                            <span>Comprar en Amazon</span>
-                            <span className="btn-luxury-dot" aria-hidden="true" />
-                        </a>
+                        <BuyButton onDark />
                     </div>
                 </div>
             </section>

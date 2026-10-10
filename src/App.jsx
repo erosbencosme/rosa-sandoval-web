@@ -1,100 +1,82 @@
-import { useState, useEffect } from 'react';
+import { useRoute, useDocumentMeta, ROUTES, FALLBACK_ROUTE } from './router';
+
 import Navbar from './components/Navbar';
-import Home from './views/Home';
-import BookDetail from './views/BookDetail';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import Popup from './components/Popup';
 
+import Home from './pages/Home';
+import SobreRosa from './pages/SobreRosa';
+import ParaTi from './pages/ParaTi';
+import SesionClaridad from './pages/SesionClaridad';
+import ParaEmpresas from './pages/ParaEmpresas';
+import GpsAbundancia from './pages/GpsAbundancia';
+import Libro from './pages/Libro';
+import Podcast from './pages/Podcast';
+import Testimonios from './pages/Testimonios';
+import Blog from './pages/Blog';
+import Contacto from './pages/Contacto';
+import Privacidad from './pages/Privacidad';
+import Terminos from './pages/Terminos';
+
 // ================================================================
-// App.jsx — SISTEMA DE ENRUTAMIENTO HASH PARA GITHUB PAGES
+// App.jsx — Composición del sitio
 // ================================================================
 //
-// ¿Por qué Hash Routing?
-// ─────────────────────────────────────────────────────────────────
-// GitHub Pages es un hosting ESTÁTICO — no tiene un servidor que
-// reescriba URLs. Si usamos BrowserRouter (react-router), al
-// refrescar /libro el servidor devuelve 404 porque no existe
-// el archivo /libro/index.html.
+// La lógica de navegación vive en router.jsx. Aquí solo decidimos
+// qué página montar y qué "chrome" (navbar + footer) la envuelve.
 //
-// Con Hash Routing, la URL se ve así:
-//   https://rosasandoval.com/#/libro
-//
-// El navegador NUNCA envía lo que hay después del '#' al servidor,
-// así que siempre carga index.html y JavaScript decide qué mostrar.
-//
-// Rutas soportadas:
-//   #/libro        → Vista del libro (Método GPS)
-//   cualquier otro → Home (incluyendo anchors como #pilares)
-//
-// Ventajas:
-//   · Cero dependencias (no react-router)
-//   · URLs compartibles (rosasandoval.com/#/libro)
-//   · Refresco de página funciona perfectamente en GitHub Pages
-//   · Las anchor-links de sección (#pilares, #contacto…) siguen
-//     funcionando porque Navbar detecta la vista actual y hace
-//     scroll con delay cuando cambia entre vistas.
+// Chrome:
+//   'full' → navbar y footer completos (casi todas las páginas)
+//   'bare' → SIN navegación. Solo la Sesión de Claridad, porque el
+//            documento la define como landing de conversión: quien
+//            llega ahí desde un anuncio debe poder agendar sin
+//            distraerse con el resto del sitio.
 // ================================================================
 
-/**
- * getViewFromHash — Determina qué vista mostrar basándose en el hash.
- *
- * Si el hash comienza con '#/libro', mostramos la vista del libro.
- * Cualquier otro hash (incluyendo '#pilares', '#contacto', etc.)
- * muestra la vista Home.
- *
- * @returns {'home' | 'book'} La vista actual
- */
-function getViewFromHash() {
-    if (typeof window === 'undefined') return 'home';
-    return window.location.hash.startsWith('#/libro') ? 'book' : 'home';
-}
+/** Mapa ruta → componente de página */
+const PAGES = {
+  '/': Home,
+  '/sobre-rosa': SobreRosa,
+  '/para-ti': ParaTi,
+  '/sesion-de-claridad': SesionClaridad,
+  '/para-empresas': ParaEmpresas,
+  '/gps-de-la-abundancia': GpsAbundancia,
+  '/libro': Libro,
+  '/podcast': Podcast,
+  '/testimonios': Testimonios,
+  '/blog': Blog,
+  '/contacto': Contacto,
+  '/privacidad': Privacidad,
+  '/terminos': Terminos,
+};
 
 export default function App() {
-    // Estado reactivo: la vista se actualiza cuando cambia el hash
-    const [view, setView] = useState(getViewFromHash);
+  const route = useRoute();
+  useDocumentMeta(route);
 
-    useEffect(() => {
-        /**
-         * onHashChange — Listener del evento 'hashchange'.
-         *
-         * Cada vez que el hash cambia (clic en enlace, botón atrás, etc.),
-         * recalculamos la vista. Si estamos entrando a la vista del libro,
-         * hacemos scroll al tope para que el usuario vea el hero.
-         */
-        const onHashChange = () => {
-            const next = getViewFromHash();
-            setView((prev) => {
-                // Scroll al tope solo cuando ENTRAMOS a la vista del libro
-                if (next === 'book' && prev !== 'book') {
-                    window.scrollTo({ top: 0, behavior: 'auto' });
-                }
-                return next;
-            });
-        };
+  const Page = PAGES[route] ?? PAGES[FALLBACK_ROUTE];
+  const chrome = (ROUTES[route] ?? ROUTES[FALLBACK_ROUTE]).chrome;
+  const isBare = chrome === 'bare';
 
-        // Registrar listener al montar el componente
-        window.addEventListener('hashchange', onHashChange);
+  return (
+    <>
+      {!isBare && <Navbar currentRoute={route} />}
 
-        // Cleanup: remover listener al desmontar
-        return () => window.removeEventListener('hashchange', onHashChange);
-    }, []);
+      <main>
+        <Page />
+      </main>
 
-    return (
-        <>
-            {/* Navbar recibe la vista actual para resaltar "El Libro" cuando estamos ahí */}
-            <Navbar currentView={view} />
+      {!isBare && <Footer />}
 
-            <main>
-                {/* Renderizado condicional: solo una vista a la vez */}
-                {view === 'book' ? <BookDetail /> : <Home />}
-            </main>
+      {/* WhatsApp flotante — presente en TODAS las páginas, incluida la
+          landing sin navegación: es un canal de contacto, no navegación. */}
+      <WhatsAppButton />
 
-            <Footer />
-            <WhatsAppButton />
-
-            {/* Popup de intención de salida — sólo relevante en Home */}
-            {view === 'home' && <Popup />}
-        </>
-    );
+      {/* Popup de intención de salida — solo en la Home, para no
+          interrumpir a quien ya está leyendo una página de servicio
+          ni a quien llegó a la landing de conversión. */}
+      {route === '/' && <Popup />}
+    </>
+  );
 }

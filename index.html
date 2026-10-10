@@ -4,47 +4,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description"
-    content="Rosa Sandoval Polanco — Coach Financiera Certificada. Transforma tu relación con el dinero desde el Ser, Hacer y Tener. Agenda tu sesión de claridad GRATIS." />
-  <meta property="og:title" content="Rosa Sandoval — La Conciencia Financiera que Transformará tu Vida" />
-  <meta property="og:description"
-    content="Del Ser al Tener: Tu camino hacia la libertad financiera. Mentoría, talleres y cursos para mujeres que quieren transformar sus finanzas." />
-  <meta property="og:type" content="website" />
-  <link rel="icon" type="image/png" href="./logo.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet" />
-  <title>Rosa Sandoval — Coach Financiera | Conciencia Financiera</title>
-  <!-- probando subir a github pages -->
-  <!-- ============================================================
-         GOOGLE ANALYTICS 4 — Descomenta y reemplaza G-XXXXXXXXXX
-    ============================================================ -->
-  <!--
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
-    -->
+  <meta name="theme-color" content="#FDFBF7" />
 
   <!-- ============================================================
-         FACEBOOK PIXEL — Descomenta y reemplaza TU_PIXEL_ID
-    ============================================================ -->
+       SEO BÁSICO
+       El <title> y la description se actualizan por ruta desde
+       router.js (useDocumentMeta). Estos son los valores por defecto
+       que ve un buscador o un bot de redes sociales.
+  ============================================================ -->
+  <title>Rosa Sandoval Polanco — Personas que crecen. Decisiones que transforman.</title>
+  <meta name="description"
+    content="Te acompaño a desarrollar una relación más consciente con el dinero, contigo misma y con los resultados que quieres construir. Educación financiera, desarrollo personal y liderazgo, para personas y organizaciones." />
+  <meta name="author" content="Rosa Sandoval Polanco" />
+
+  <!-- Open Graph / redes sociales -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_DO" />
+  <meta property="og:site_name" content="Rosa Sandoval Polanco" />
+  <meta property="og:title" content="Rosa Sandoval Polanco — Aquí conectamos" />
+  <meta property="og:description"
+    content="Educación financiera, desarrollo personal y liderazgo. Metodología GPS de la Abundancia®: Ser, Hacer y Tener. Mentoría individual y programas para empresas." />
+  <!-- ⚠️ PENDIENTE: reemplazar por una imagen 1200×630 px diseñada para
+       compartir. Debe ser una URL ABSOLUTA para que Facebook, LinkedIn
+       y WhatsApp la lean; las rutas relativas no funcionan en OG. -->
+  <meta property="og:image" content="https://rosasandoval.com/images/rosa-sandoval.jpg" />
+  <meta property="og:image:alt" content="Rosa Sandoval Polanco" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rosa Sandoval Polanco — Aquí conectamos" />
+  <meta name="twitter:description"
+    content="Educación financiera, desarrollo personal y liderazgo. Metodología GPS de la Abundancia®." />
+
+  <link rel="icon" type="image/png" href="./logo.png" />
+
+  <!-- ============================================================
+       FUENTES
+       Las familias reales del sitio (Fraunces, Newsreader, Inter Tight,
+       JetBrains Mono) se importan desde src/index.css.
+       Aquí solo abrimos la conexión con antelación para que la
+       descarga empiece antes: ahorra ~100 ms en el primer render.
+  ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- ============================================================
+       GOOGLE ANALYTICS 4
+       Descomenta y reemplaza G-XXXXXXXXXX por el ID real.
+       ⚠️ Al activarlo hay que actualizar la sección "Cookies" de
+          la Política de Privacidad: pasarían a existir cookies
+          de terceros que declarar.
+  ============================================================ -->
   <!--
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', 'TU_PIXEL_ID');
-      fbq('track', 'PageView');
-    </script>
-    -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  -->
+
+  <!-- ============================================================
+       FACEBOOK PIXEL
+       Mismo aviso que arriba respecto a la política de privacidad.
+  ============================================================ -->
+  <!--
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'TU_PIXEL_ID');
+    fbq('track', 'PageView');
+  </script>
+  -->
 </head>
 
 <body>
