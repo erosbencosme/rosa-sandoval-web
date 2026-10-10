@@ -23,7 +23,7 @@
  * ⚠️ PENDIENTE: reemplazar cuando el libro esté publicado.
  *    Ejemplo: 'https://www.amazon.com/dp/B0XXXXXXXXX'
  */
-export const AMAZON_BOOK_LINK = 'https://www.amazon.com/dp/YOUR_BOOK_ASIN';
+export const AMAZON_BOOK_LINK = 'https://www.amazon.com/dp/B0H922WZRH';
 
 /** ¿El libro ya está a la venta? Si es false, la UI muestra "Próximamente". */
 export const BOOK_ON_SALE = false;
