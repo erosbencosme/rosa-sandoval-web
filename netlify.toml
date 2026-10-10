@@ -1,0 +1,85 @@
+# ================================================================
+# NETLIFY — Configuración de despliegue
+# ================================================================
+#
+# El sitio se publica solo: cada push a la rama `main` dispara un
+# build nuevo. No hay que ejecutar nada a mano.
+#
+# Este archivo solo lo lee Netlify. No afecta a `npm run dev` ni a
+# `npm run build` en local.
+# ================================================================
+
+[build]
+  # Vite deja el resultado en dist/
+  command = "npm run build"
+  publish  = "dist"
+
+[build.environment]
+  # Vite 7 exige Node 20.19+ o 22.12+. Sin fijarlo, Netlify podría
+  # usar una versión antigua por defecto y el build fallaría con un
+  # error de "engine" poco descriptivo.
+  NODE_VERSION = "22"
+
+
+# ================================================================
+# REDIRECCIÓN SPA
+# ================================================================
+#
+# Hoy el sitio usa hash routing (#/sobre-rosa), así que el servidor
+# solo recibe peticiones a "/" y esta regla casi nunca se activa.
+#
+# Está puesta por dos motivos:
+#   1. Si alguien escribe /sobre-rosa a mano (sin el #), en vez de un
+#      404 recibe la aplicación, que lo lleva al inicio.
+#   2. Si en el futuro se migra a rutas reales (BrowserRouter) para
+#      arreglar el SEO del blog, esto ya está listo y no hay que
+#      acordarse de añadirlo.
+#
+# status = 200 significa "sirve index.html SIN cambiar la URL del
+# navegador", que es lo que necesita una SPA. Un 301 rompería el
+# enrutamiento del lado del cliente.
+# ================================================================
+
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
+
+
+# ================================================================
+# ⚠️ BLOQUEO DE INDEXACIÓN — QUITAR AL LANZAR
+# ================================================================
+#
+# Mientras esto sea una vista previa para Rosa, el sitio NO debe
+# aparecer en Google.
+#
+# Motivo concreto: hay contenido de relleno visible — testimonios que
+# dicen "Nombre por confirmar" y artículos marcados "Próximamente".
+# Si Google los indexa bajo el nombre de Rosa, pueden quedar en caché
+# y salir en búsquedas de su nombre durante semanas, incluso después
+# de corregirlos.
+#
+# 🚀 AL LANZAR EL SITIO DEFINITIVO: borrar este bloque entero.
+#
+# Está aquí, en netlify.toml, y no en un public/robots.txt a
+# propósito: así no viaja al hosting final por descuido. Si estuviera
+# en public/, se copiaría al build y acabaría bloqueando el sitio de
+# verdad sin que nadie se diera cuenta.
+# ================================================================
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+    # Cabeceras de seguridad básicas (estas SÍ conviene conservar)
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+
+
+# Los assets con hash en el nombre (index-a1b2c3.js) nunca cambian de
+# contenido, así que se pueden cachear indefinidamente.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

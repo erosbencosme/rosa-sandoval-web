@@ -9,30 +9,30 @@ import tailwindcss from '@tailwindcss/vite'
 // base — de dónde cuelgan los assets
 // ─────────────────────────────────────────────────────────────────
 //
-//   DESARROLLO  → '/'
-//     El servidor local sirve desde la raíz. Así http://localhost:5173
-//     funciona directo, sin tener que escribir el subdirectorio a mano
-//     cada vez.
+// '/' en desarrollo y en producción, porque el sitio se sirve desde la
+// RAÍZ del dominio:
 //
-//   BUILD       → '/rosa-sandoval-web/'
-//     GitHub Pages sirve el sitio desde el subdirectorio del repo:
-//       https://erosbencosme.github.io/rosa-sandoval-web/
-//     Vite prefija este base a los assets procesados (JS/CSS), lo que
-//     evita los 404 de rutas que apuntarían a la raíz del dominio.
+//     Hoy (vista previa)  → https://<nombre>.netlify.app/
+//     Mañana (definitivo) → https://rosasandoval.com/
+//
+// Al ser el mismo valor en los dos casos, migrar al hosting final no
+// requiere tocar nada de esta configuración.
+//
+// ⚠️ HISTÓRICO — por qué esto antes era '/rosa-sandoval-web/'
+//    El sitio se publicaba en GitHub Pages, que lo servía dentro del
+//    subdirectorio del repositorio. Ese prefijo era obligatorio ahí.
+//    Si algún día se vuelve a GitHub Pages, hay que restaurarlo; con
+//    base '/' los assets darían 404 bajo el subdirectorio.
+//    (El script `npm run deploy` del package.json sigue apuntando a
+//     gh-pages, pero ya no es la vía de publicación.)
 //
 // ⚠️ Los assets de public/ referenciados como string en runtime
-//    (./logo.png, ./images/…) usan rutas RELATIVAS a propósito, para
-//    resolver bien en ambos casos. No cambiarlas a rutas absolutas:
-//    una ruta como "/logo.png" da 404 bajo el subdirectorio.
+//    (./logo.png, ./images/…) usan rutas RELATIVAS. Funcionan igual
+//    con cualquier base, así que no hace falta tocarlas.
 //
 // ─────────────────────────────────────────────────────────────────
-// PARA PASAR A DOMINIO PROPIO (rosasandoval.com)
-//   1. Cambiar PROD_BASE a '/'
-//   2. Crear public/CNAME con una sola línea: rosasandoval.com
-//   3. Apuntar el DNS a GitHub Pages
-// ─────────────────────────────────────────────────────────────────
 
-const PROD_BASE = '/rosa-sandoval-web/'
+const PROD_BASE = '/'
 
 export default defineConfig(({ command }) => ({
   plugins: [
