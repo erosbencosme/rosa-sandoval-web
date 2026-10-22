@@ -99,11 +99,11 @@ export const BRAND = {
 
 /** Áreas de expertise — se muestran como barra bajo el hero */
 export const EXPERTISE_AREAS = [
-  'Educación Financiera',
+  'Conciencia Financiera',
+  'Cultura',
+  'Bienestar Organizacional y Productividad',
   'Desarrollo Personal',
-  'Liderazgo',
-  'Ventas y Desarrollo Comercial',
-  'Servicio al Cliente',
+  'Habilidades blandas',
 ];
 
 /**
@@ -153,9 +153,8 @@ export const BOOK = {
   author: 'Rosa Sandoval Polanco',
   year: '2026',
   edition: 'Primera edición',
-  pages: 240,
-  /** ⚠️ PENDIENTE: ISBN real */
-  isbn: 'Por asignar',
+  pages: 252,
+  isbn: '978-9945-662-24-5',
 
   coverSrc: BOOK_COVER_IMAGE_PATH,
   amazonUrl: AMAZON_BOOK_LINK,

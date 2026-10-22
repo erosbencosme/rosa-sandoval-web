@@ -39,7 +39,7 @@ const CLIENT_LOGOS = [];
 /** Credenciales para la barra de confianza */
 const credentials = [
   { value: 'Máster', label: 'Gerencia y Productividad' },
-  { value: 'Coach', label: 'Facilitadora de Formación Profesional' },
+  { value: 'Coach', label: 'Preguntas que transforman' },
   { value: 'Autora', label: 'GPS de la Abundancia®' },
   { value: '5', label: 'Áreas de especialidad' },
 ];

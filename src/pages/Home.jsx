@@ -165,13 +165,14 @@ export default function Home() {
             {GPS_PILLARS.map((pillar, i) => (
               <Reveal key={pillar.label} delay={i * 120}>
                 <Card className="!p-7">
-                  <div
+                  {/* mi madre me mano a eliminarlo pero lo dejo comentado temporalemnte por si se necesita despues */}
+                  {/* <div
                     aria-hidden="true"
                     className="font-display italic font-light leading-none mb-5 select-none"
                     style={{ color: 'var(--color-gilt)', fontSize: '2.5rem', opacity: 0.75 }}
                   >
                     {pillar.numeral}
-                  </div>
+                  </div> */}
 
                   <h3 className="font-display font-light text-olive-dark text-[1.75rem] leading-none m-0 mb-4">
                     {pillar.label}

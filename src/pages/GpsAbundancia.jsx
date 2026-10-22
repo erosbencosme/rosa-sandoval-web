@@ -122,9 +122,9 @@ export default function GpsAbundancia() {
             <Reveal key={pillar.label} delay={i * 130}>
               <article className="group grid grid-cols-1 md:grid-cols-12 gap-x-10 gap-y-6
                 py-14 border-t border-olive-dark/12 last:border-b">
-
                 {/* Numeral romano gigante */}
-                <div className="md:col-span-2">
+                {/* mi madre me mano a eliminarlo pero lo dejo comentado temporalemnte por si se necesita despues */}
+                {/* <div className="md:col-span-2">
                   <span
                     aria-hidden="true"
                     className="font-display italic font-light leading-none select-none block
@@ -137,7 +137,7 @@ export default function GpsAbundancia() {
                   >
                     {pillar.numeral}
                   </span>
-                </div>
+                </div> */}
 
                 {/* Nombre */}
                 <div className="md:col-span-4">
@@ -208,7 +208,8 @@ export default function GpsAbundancia() {
       </section>
 
       {/* ═══ EL RECORRIDO ═══════════════════════════════════════ */}
-      <Section background="sand">
+      {/* mi madre me mano a eliminarlo pero lo dejo comentado temporalemnte por si se necesita despues */}
+      {/* <Section background="sand">
         <Reveal className="max-w-3xl mx-auto text-center mb-20">
           <Eyebrow align="center">El recorrido</Eyebrow>
 
@@ -223,7 +224,7 @@ export default function GpsAbundancia() {
         </Reveal>
 
         <GpsTimeline variant="full" />
-      </Section>
+      </Section> */}
 
       {/* ═══ CTA — LIBRO Y MENTORÍA ═════════════════════════════ */}
       <section className="relative py-28 md:py-36 overflow-hidden" style={{ background: 'var(--color-rich)' }}>

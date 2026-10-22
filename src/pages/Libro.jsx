@@ -18,24 +18,23 @@ import useIntersectionObserver from '../hooks/useIntersectionObserver';
  */
 function BuyButton({ onDark = false }) {
     const classes = `btn-luxury ${onDark ? 'btn-luxury--onDark' : ''}`;
-
-    if (!BOOK.onSale) {
-        return (
-            <div className="inline-flex flex-col gap-3">
-                <span
-                    className={`${classes} pointer-events-none opacity-55`}
-                    aria-disabled="true"
-                >
-                    <span>Próximamente en Amazon</span>
-                    <span className="btn-luxury-dot" aria-hidden="true" />
-                </span>
-                <span className={`font-mono text-[10px] tracking-[0.18em] uppercase
-                    ${onDark ? 'text-sand/45' : 'text-olive-dark/45'}`}>
-                    Fecha de publicación por anunciar
-                </span>
-            </div>
-        );
-    }
+    // if (!BOOK.onSale) {
+    //     return (
+    //         <div className="inline-flex flex-col gap-3">
+    //             <span
+    //                 className={`${classes} pointer-events-none opacity-55`}
+    //                 aria-disabled="true"
+    //             >
+    //                 <span>Próximamente en Amazon</span>
+    //                 <span className="btn-luxury-dot" aria-hidden="true" />
+    //             </span>
+    //             <span className={`font-mono text-[10px] tracking-[0.18em] uppercase
+    //                 ${onDark ? 'text-sand/45' : 'text-olive-dark/45'}`}>
+    //                 Fecha de publicación por anunciar
+    //             </span>
+    //         </div>
+    //     );
+    // }
 
     return (
         <a href={BOOK.amazonUrl} target="_blank" rel="noopener noreferrer" className={classes}>
@@ -399,7 +398,8 @@ export default function Libro() {
             </section>
 
             {/* ═══ BLUEPRINT · SER · HACER · TENER ═══════════════════ */}
-            <section
+            {/* mi madre me mano a eliminarlo pero lo dejo comentado temporalemnte por si se necesita despues */}
+            {/* <section
                 id="method"
                 ref={pillarsRef}
                 className="py-32 md:py-48 border-t"
@@ -468,7 +468,7 @@ export default function Libro() {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* ═══ CITA DE LA TESIS ═══════════════════════════════════ */}
             <section
@@ -493,68 +493,68 @@ export default function Libro() {
                  Solo se muestra con elogios reales Y el libro publicado.
                  Ver la nota en PRAISE_PENDING arriba. */}
             {showPraise && (
-            <section
-                ref={praiseRef}
-                className="py-32 md:py-40 border-t"
-                style={{ borderColor: 'rgba(28, 45, 31, 0.08)', background: 'var(--color-silk)' }}
-            >
-                <div className="max-w-[1400px] mx-auto px-[6%]">
-                    <header className="max-w-2xl mb-20 md:mb-24">
-                        <div className="font-mono text-[11px] tracking-[0.3em] uppercase
+                <section
+                    ref={praiseRef}
+                    className="py-32 md:py-40 border-t"
+                    style={{ borderColor: 'rgba(28, 45, 31, 0.08)', background: 'var(--color-silk)' }}
+                >
+                    <div className="max-w-[1400px] mx-auto px-[6%]">
+                        <header className="max-w-2xl mb-20 md:mb-24">
+                            <div className="font-mono text-[11px] tracking-[0.3em] uppercase
               text-olive-dark/55 mb-8 flex items-center gap-4">
-                            <span
-                                aria-hidden="true"
-                                className="block w-10 h-px"
-                                style={{ background: 'var(--color-gilt)' }}
-                            />
-                            Elogios tempranos
-                        </div>
-                        <h2 className="font-display font-light text-olive-dark
-              text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.05] tracking-tight m-0">
-                            Voces del{' '}
-                            <em className="italic font-normal text-olive">meridiano</em>.
-                        </h2>
-                    </header>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-16">
-                        {bookPraise.map((p, i) => (
-                            <figure
-                                key={p.by}
-                                className={`relative transition-all duration-700 ease-out
-                  ${praiseVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-                                style={{ transitionDelay: `${i * 150}ms` }}
-                            >
-                                {/* Comilla gilt oversized */}
-                                <div
+                                <span
                                     aria-hidden="true"
-                                    className="font-display italic font-normal leading-none
-                    -mt-2 mb-4 select-none"
-                                    style={{
-                                        color: 'var(--color-gilt)',
-                                        fontSize: '4.5rem',
-                                    }}
+                                    className="block w-10 h-px"
+                                    style={{ background: 'var(--color-gilt)' }}
+                                />
+                                Elogios tempranos
+                            </div>
+                            <h2 className="font-display font-light text-olive-dark
+              text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.05] tracking-tight m-0">
+                                Voces del{' '}
+                                <em className="italic font-normal text-olive">meridiano</em>.
+                            </h2>
+                        </header>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-16">
+                            {bookPraise.map((p, i) => (
+                                <figure
+                                    key={p.by}
+                                    className={`relative transition-all duration-700 ease-out
+                  ${praiseVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                                    style={{ transitionDelay: `${i * 150}ms` }}
                                 >
-                                    "
-                                </div>
+                                    {/* Comilla gilt oversized */}
+                                    <div
+                                        aria-hidden="true"
+                                        className="font-display italic font-normal leading-none
+                    -mt-2 mb-4 select-none"
+                                        style={{
+                                            color: 'var(--color-gilt)',
+                                            fontSize: '4.5rem',
+                                        }}
+                                    >
+                                        "
+                                    </div>
 
-                                <blockquote className="font-display italic font-light text-olive-dark
+                                    <blockquote className="font-display italic font-light text-olive-dark
                   text-[1.2rem] md:text-[1.3rem] leading-[1.5] m-0 max-w-[34ch]">
-                                    {p.text}
-                                </blockquote>
+                                        {p.text}
+                                    </blockquote>
 
-                                <figcaption className="mt-8 pt-6 border-t border-olive-dark/15">
-                                    <div className="font-ui text-[0.72rem] font-semibold text-olive-dark tracking-[0.2em] uppercase">
-                                        — {p.by}
-                                    </div>
-                                    <div className="mt-2 font-ui text-[0.68rem] text-olive-dark/55 tracking-[0.18em] uppercase">
-                                        {p.role}
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        ))}
+                                    <figcaption className="mt-8 pt-6 border-t border-olive-dark/15">
+                                        <div className="font-ui text-[0.72rem] font-semibold text-olive-dark tracking-[0.2em] uppercase">
+                                            — {p.by}
+                                        </div>
+                                        <div className="mt-2 font-ui text-[0.68rem] text-olive-dark/55 tracking-[0.18em] uppercase">
+                                            {p.role}
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
             )}
 
             {/* ═══ CTA FINAL — Match perfecto con el Footer ══════════
@@ -616,7 +616,8 @@ export default function Libro() {
                             {' — '}
                             <span style={{ color: 'rgba(253, 251, 247, 0.85)' }}>{BOOK.subtitle}</span>.
                             <br className="hidden sm:block" />
-                            {BOOK.onSale ? 'Disponible ahora en Amazon.' : 'Próximamente disponible.'}
+                            {/* {BOOK.onSale ? 'Disponible ahora en Amazon.' : 'Próximamente disponible.'} */}
+                            Disponible ahora en Amazon.
                         </p>
 
                         <BuyButton onDark />

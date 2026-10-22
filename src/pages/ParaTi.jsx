@@ -157,7 +157,8 @@ export default function ParaTi() {
       </Section>
 
       {/* ═══ LA METODOLOGÍA EN EL PROCESO ═══════════════════════ */}
-      <Section background="sand">
+      {/* Codigo eliminado porque es redundante y mi madre me mano a eliminarlo pero lo dejo comentado temporalemnte por si se necesita despues */}
+      {/* <Section background="sand">
         <Reveal className="max-w-3xl mx-auto text-center mb-20">
           <Eyebrow align="center">La ruta · III movimientos</Eyebrow>
 
@@ -176,7 +177,7 @@ export default function ParaTi() {
         <Reveal className="mt-16 text-center">
           <CtaRoute to="/gps-de-la-abundancia">Conocer GPS de la Abundancia®</CtaRoute>
         </Reveal>
-      </Section>
+      </Section> */}
 
       {/* ═══ PREGUNTAS FRECUENTES ═══════════════════════════════ */}
       <Section background="silk" width="960px">
